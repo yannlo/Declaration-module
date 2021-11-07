@@ -1,16 +1,15 @@
 {% extends "layout.twig" %}
 
-{% block title "Liste de Exemple" %}
+{% block title "Articles" %}
 
 
 {% block content %}
-<h1>Liste les exemples</h1>
+<h1>Liste des articles</h1>
 <p>
     <ul>
-        <li><a href="#">Exemple 1</a></li>
-        <li><a href="#">Exemple 2</a></li>
-        <li><a href="#">Exemple 3</a></li>
-        <li><a href="#">Exemple 4</a></li>
+        {% for article in articles %}
+            <li><a href="{{ article.slug()}}-{{article.id() }}">{{ article.title() }}</a></li>
+        {% endfor %}
     </ul>
 </p>
 {% endblock %}

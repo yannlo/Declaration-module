@@ -16,7 +16,7 @@ class Example extends Module
      *
      * migration file path
      */
-    public const MIGRATION = __DIR__ . '/db/migration';
+    public const MIGRATIONS = __DIR__ . '/db/migrations';
 
     /**
      * SEEDS

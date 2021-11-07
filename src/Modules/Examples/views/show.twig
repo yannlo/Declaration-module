@@ -1,9 +1,9 @@
 {% extends "layout.twig" %}
 
-{% block title example.name %}
+{% block title article.title %}
 
 
 {% block content %}
-<h1>Page d'exemple</h1>
-<p>{{ example.content}}</p>
+<h1>titre: {{ article.title }}</h1>
+<p>{{ article.content}}</p>
 {% endblock %}

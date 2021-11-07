@@ -52,7 +52,9 @@ class ControlMatching implements MiddlewareInterface
             throw new \InvalidArgumentException('invalid handler class');
         }
 
-        $request = $request -> withAttribute("routeName", $route->getName());
+        $request = $request -> withAttribute("routeName", $route->getName())
+            -> withAttribute("routeParams", $route->getParams());
+
 
         return $handler->handle($request);
     }

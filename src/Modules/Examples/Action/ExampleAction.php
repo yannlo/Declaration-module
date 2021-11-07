@@ -3,37 +3,49 @@
 namespace YannLo\Basic\Modules\Examples\Action;
 
 use GuzzleHttp\Psr7\Response;
-use YannLo\Basic\Router\Router;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use YannLo\Basic\Renderer\RendererInterface;
+use YannLo\Basic\Modules\Examples\Models\ArticleManager;
 
 class ExampleAction implements MiddlewareInterface
 {
-    use \YannLo\Basic\Modules\Tools\ExtractPageTrait;
+    use \YannLo\Basic\Modules\Tools\Action\ExtractPageTrait;
 
-    public function __construct(private \PDO $pdo, private RendererInterface $renderer)
-    {
+    public function __construct(
+        private \PDO $pdo,
+        private RendererInterface $renderer,
+        private ArticleManager $manager
+    ) {
     }
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $routeName = $request ->getAttribute("routeName");
 
-        $page = $this -> extractPageOnRouteName($routeName);
+        $page = $this -> extractRouteName($routeName);
 
-        return $this -> $page();
+        $data ["routeParams"] = $request -> getAttribute("routeParams");
+
+        return $this -> $page($data);
     }
 
-    private function index(): ResponseInterface
+    private function index(array $data): ResponseInterface
     {
-        return new Response(body: $this->renderer->render("@Example/index"));
+        $data["articles"] = $this -> manager -> getAll();
+        return new Response(body: $this->renderer->render("@Example/index", $data));
     }
 
-    private function show(): ResponseInterface
+    private function show(array $data): ResponseInterface
     {
-        return new Response(body: $this->renderer->render("@Example/show"));
+        $data["article"] = $this -> manager -> getOnce($data["routeParams"]["id"]);
+
+        if ($data['routeParams']['slug'] != $data["article"] -> slug()) {
+            return (new Response(301)) -> withHeader("location", $data["article"]->slug()."-".$data["article"]->id());
+        }
+
+        return new Response(body: $this->renderer->render("@Example/show", $data));
     }
 }
