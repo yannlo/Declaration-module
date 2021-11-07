@@ -7,7 +7,7 @@ namespace YannLo\Basic\Framework;
  *
  * To get basic configuration to module
  */
-abstract class Module
+class Module
 {
     /**
      * @var string|null DEFINITIONS
@@ -22,7 +22,7 @@ abstract class Module
      *
      * indicates if a migration folder exists
      */
-    public const MIGRATION = null;
+    public const MIGRATIONS = null;
 
 
     /**

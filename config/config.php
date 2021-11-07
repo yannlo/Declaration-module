@@ -13,9 +13,9 @@ return [
 
     // database config
     "database.host" => "localhost",
-    "database.username" => "yannlo",
-    "database.password" => "",
-    "database.name" => "test",
+    "database.username" => "root",
+    "database.password" => "YannLo@01",
+    "database.name" => "basic_project",
 
     // default view config
     'views.layouts_path' => dirname(__DIR__) . "/src/views",
@@ -33,7 +33,7 @@ return [
         get('database.password'),
         [
             \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
-            \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_OBJ,
+            \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
         ]
     ),
 ];
