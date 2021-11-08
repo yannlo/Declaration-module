@@ -7,14 +7,14 @@ use YannLo\Basic\Framework\App;
 use function Http\Response\send;
 use GuzzleHttp\Psr7\ServerRequest;
 
-use YannLo\Basic\Middlewares\ControlMatching;
-
 use YannLo\Basic\Modules\Errors\Error;
-use YannLo\Basic\Modules\Examples\Example;
+use YannLo\Basic\Modules\Declarations\Declaration;
+
+use YannLo\Basic\Middlewares\ControlMatching;
 
 $modules =[
     Error::class,
-    Example::class
+    Declaration::class
     // modules name here
 ];
 

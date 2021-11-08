@@ -5,6 +5,7 @@ namespace YannLo\Basic\Middlewares;
 use GuzzleHttp\Psr7\Response;
 use YannLo\Basic\Framework\App;
 use YannLo\Basic\Router\Router;
+use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -20,23 +21,25 @@ class ControlMatching implements MiddlewareInterface
 {
 
 
+    private Router $router;
+
     /**
      * __construct
      *
-     * @param  Router $router
+     * @param  ContainerInterface $container
      * @param  RendererInterface $renderer
      * @return void
      */
-    public function __construct(private Router $router, private RendererInterface $renderer)
+    public function __construct(private ContainerInterface $container, private RendererInterface $renderer)
     {
+        $this -> router = $this -> container -> get(Router::class)["user"];
     }
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
 
-
         $route = $this->router->match($request);
-
+        
         if (is_null($route)) {
             $response = new Response();
             $content = $this -> renderer -> render("@Error/404");

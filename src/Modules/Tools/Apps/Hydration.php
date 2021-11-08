@@ -1,6 +1,6 @@
 <?php
 
-namespace YannLo\Basic\Modules\Tools\App;
+namespace YannLo\Basic\Modules\Tools\Apps;
 
 /**
  * Hydration
